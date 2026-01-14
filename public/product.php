@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../app/db.php';
 require __DIR__ . '/../app/auth.php';
+require __DIR__ . '/../app/helpers.php';
 
 $pdo = db();
 $id = (int)($_GET['id'] ?? 0);
@@ -28,7 +29,7 @@ $specs = $specsStmt->fetchAll();
 
 <head>
     <meta charset="utf-8">
-    <title><?= htmlspecialchars($product['title']) ?></title>
+    <title><?= e($product['title']) ?></title>
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
@@ -37,9 +38,9 @@ $specs = $specsStmt->fetchAll();
 
     <main class="container">
         <div class="product-page">
-            <img class="product-big" src="/<?= htmlspecialchars($product['main_image'] ?? '') ?>" alt="">
+            <img class="product-big" src="/<?= e($product['main_image'] ?? '') ?>" alt="">
             <div>
-                <h1><?= htmlspecialchars($product['title']) ?></h1>
+                <h1><?= e($product['title']) ?></h1>
                 <p class="price"><?= number_format((float)$product['price'], 2, '.', ' ') ?> ₽</p>
                 <p class="stock">В наличии: <strong><?= (int)$product['stock_qty'] ?></strong></p>
 
@@ -47,13 +48,13 @@ $specs = $specsStmt->fetchAll();
                     <h3>Характеристики</h3>
                     <ul class="specs">
                         <?php foreach ($specs as $s): ?>
-                            <li><span><?= htmlspecialchars($s['spec_key']) ?></span><b><?= htmlspecialchars($s['spec_value']) ?></b></li>
+                            <li><span><?= e($s['spec_key']) ?></span><b><?= e($s['spec_value']) ?></b></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
 
                 <h3>Описание</h3>
-                <p><?= nl2br(htmlspecialchars($product['description'])) ?></p>
+                <p><?= nl2br(e($product['description'])) ?></p>
 
                 <?php if (current_user()): ?>
                     <form method="post" action="/wishlist.php">

@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../app/db.php';
 require __DIR__ . '/../app/auth.php';
+require __DIR__ . '/../app/helpers.php';
 
 $pdo = db();
 
@@ -48,10 +49,10 @@ $products = $stmt->fetchAll();
                 <tbody>
                     <?php foreach ($products as $p): ?>
                         <tr>
-                            <td><img class="thumb" src="/<?= htmlspecialchars($p['main_image'] ?? '') ?>" alt=""></td>
-                            <td><?= htmlspecialchars($p['title']) ?></td>
+                            <td><img class="thumb" src="/<?= e($p['main_image'] ?? '') ?>" alt=""></td>
+                            <td><?= e($p['title']) ?></td>
                             <td><?= number_format((float)$p['price'], 2, '.', ' ') ?> ₽</td>
-                            <td><?= htmlspecialchars($p['short_desc']) ?></td>
+                            <td><?= e($p['short_desc']) ?></td>
                             <td><a class="btn" href="/product.php?id=<?= (int)$p['id'] ?>">Подробнее</a></td>
                         </tr>
                     <?php endforeach; ?>
@@ -63,9 +64,9 @@ $products = $stmt->fetchAll();
             <div class="grid">
                 <?php foreach ($products as $p): ?>
                     <article class="card">
-                        <img class="card-img" src="/<?= htmlspecialchars($p['main_image'] ?? '') ?>" alt="">
-                        <h3><?= htmlspecialchars($p['title']) ?></h3>
-                        <p class="muted"><?= htmlspecialchars($p['short_desc']) ?></p>
+                        <img class="card-img" src="/<?= e($p['main_image'] ?? '') ?>" alt="">
+                        <h3><?= e($p['title']) ?></h3>
+                        <p class="muted"><?= e($p['short_desc']) ?></p>
                         <div class="row">
                             <strong><?= number_format((float)$p['price'], 2, '.', ' ') ?> ₽</strong>
                             <a class="btn" href="/product.php?id=<?= (int)$p['id'] ?>">Открыть</a>
