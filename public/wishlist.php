@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../app/db.php';
 require __DIR__ . '/../app/auth.php';
+require __DIR__ . '/../app/helpers.php';
 
 require_auth();
 $pdo = db();
@@ -60,8 +61,8 @@ $items = $stmt->fetchAll();
             <div class="grid">
                 <?php foreach ($items as $it): ?>
                     <article class="card">
-                        <img class="card-img" src="/<?= htmlspecialchars($it['main_image'] ?? '') ?>" alt="">
-                        <h3><?= htmlspecialchars($it['title']) ?></h3>
+                        <img class="card-img" src="/<?= e($it['main_image'] ?? '') ?>" alt="">
+                        <h3><?= e($it['title']) ?></h3>
                         <p>Кол-во: <strong><?= (int)$it['qty'] ?></strong></p>
                         <p>Цена: <strong><?= number_format((float)$it['price'], 2, '.', ' ') ?> ₽</strong></p>
                         <form method="post">
